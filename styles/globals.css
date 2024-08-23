@@ -85,6 +85,15 @@ fieldset {
     justify-content: center;
 }
 
+.small-card-title {
+    color: #184B75;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: start;
+    justify-content: center;
+}
+
 .button {
     background: transparent;
     padding: 0.5rem 1rem;

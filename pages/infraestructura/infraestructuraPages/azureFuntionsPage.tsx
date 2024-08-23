@@ -1,8 +1,8 @@
 // pages/azureFunctionsPage.js
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../../../components/Header";
+import Footer from "../../../components/Footer";
 import React, { useState } from "react";
-import Breadcrumb from '../components/ui/Breadcrumb';
+import Breadcrumb from '../../../components/ui/Breadcrumb';
 import { useRouter } from 'next/router';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,7 +11,7 @@ export default function AzureFunctionsPage() {
   const router = useRouter();
 
   const breadcrumbItems = [
-    { text: 'Recursos', link: '/infraestructuraPage' }
+    { text: 'Recursos', link: '/infraestructura/infraestructuraPage' }
   ];
 
   const [formData, setFormData] = useState({
@@ -82,7 +82,7 @@ export default function AzureFunctionsPage() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      onClose: () => router.push('/infraestructuraPage')
+      onClose: () => router.push('/infraestructura/infraestructuraPage')
     });
   };
 
@@ -229,7 +229,7 @@ export default function AzureFunctionsPage() {
             Environment details
           </label>
           <label className=" mb-[5px] block text-base font-medium">
-            Precios de Planes Linux (East US)
+            Precios de Planes Linux
           </label>
           <div className="relative z-10">
             <select
@@ -261,7 +261,7 @@ export default function AzureFunctionsPage() {
         <label className="card-title mb-[5px] block text-base font-medium">
             Environment details
           </label>
-            Precios de Planes Windows (East US)
+            Precios de Planes Windows
           </label>
           <div className="relative z-10">
             <select
@@ -292,7 +292,7 @@ export default function AzureFunctionsPage() {
             Storage
           </label>
           <p className="mb-2">Al crear una aplicación de funciones, debe crear o vincular a una cuenta de Azure Storage de uso general que admita Blobs, Queue y Table Storage.         </p>
-          <label className=" mb-[5px] block text-base font-medium">
+          <label className="small-card-title mb-[5px] block text-base font-medium">
             Storage account
           </label>
           <input
@@ -300,7 +300,7 @@ export default function AzureFunctionsPage() {
             type="text"
             value={formData.storage}
             onChange={handleInputChange}
-            placeholder="Version"
+            placeholder="Nombre Sugerido del Storage Account"
             className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
             required
           />
@@ -314,10 +314,10 @@ export default function AzureFunctionsPage() {
           </p>
           
           <div className="relative z-10 grid">
-            <label><input id="diagnosticoNot" value="Dont configure diagnostic settings now" type="radio" name="diagnostico" checked={formData.diagnostico === 'Dont configure diagnostic settings now'} onChange={handleRadioChangeDg}/> <b>¡No configure ajustes de diagnóstico ahora!
+            <label><input id="diagnosticoNot" value="Dont configure diagnostic settings now" type="radio" name="diagnostico" checked={formData.diagnostico === 'Dont configure diagnostic settings now'} onChange={handleRadioChangeDg}/> <b className="small-card-title">¡No configure ajustes de diagnóstico ahora!
             </b> Puede configurar ajustes de diagnóstico más adelante desde el recurso de la cuenta de almacenamiento. Elija esto si desea tener control total sobre los destinos de los registros, las políticas de retención y qué registros y métricas están configurados.
             </label>
-            <label className="mt-4"><input  id="diagnosticoYes" value="Configure basic diagnostic settings now" type="radio" name="diagnostico" checked={formData.diagnostico === 'Configure basic diagnostic settings now'} onChange={handleRadioChangeDg} /> <b>Configure los ajustes de diagnóstico básicos ahora!
+            <label className="mt-4"><input  id="diagnosticoYes" value="Configure basic diagnostic settings now" type="radio" name="diagnostico" checked={formData.diagnostico === 'Configure basic diagnostic settings now'} onChange={handleRadioChangeDg} /> <b className="small-card-title">Configure los ajustes de diagnóstico básicos ahora!
             </b> Configure Azure Log Analytics con registros de StorageWrite y métricas de transacciones para el servicio de blobs. Puede modificar su configuración de diagnóstico más adelante desde el recurso de la cuenta de almacenamiento.
             </label>
           </div>
@@ -353,7 +353,7 @@ export default function AzureFunctionsPage() {
         <label className="card-title mb-[10px] mt-4 block text-base font-medium">
         Virtual Network
         </label>
-        <p className="mb-3">Select or create a virtual network that is in the same region as your new app.
+        <p className="mb-3">Seleccione o cree una red virtual que esté en la misma región que su nueva aplicación.
         </p>
         <input
             id="redVirtual"

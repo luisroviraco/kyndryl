@@ -20,7 +20,7 @@ const HomeContent = () => {
           <button className="buttonDeactivate mb-7">
             Gobierno
           </button>
-          <Link href="/infraestructuraPage" passHref>
+          <Link href="/infraestructura/infraestructuraPage" passHref>
             <button className="button mb-7">
               Infraestructura
             </button>

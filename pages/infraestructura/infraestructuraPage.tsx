@@ -1,30 +1,33 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import React, { useEffect, useState } from 'react';
-import Card from "../components/Card";
-import Breadcrumb from '../components/ui/Breadcrumb';
+import Card from "../../components/Card";
+import Breadcrumb from '../../components/ui/Breadcrumb';
 import emailjs from 'emailjs-com';
 
 export default function InfraestructuraPage() {
   const [activeButtons, setActiveButtons] = useState({
     azureFunction: false,
     webServices: false,
+    storageAccount: false,
   });
 
   useEffect(() => {
     const savedAzureFunctionFormData = localStorage.getItem('azureFunctionFormData');
     const savedWebServicesFormData = localStorage.getItem('webServicesFormData');
+    const savedStorageAccountFormData = localStorage.getItem('storageAccountFormData');
 
     setActiveButtons({
       azureFunction: !!savedAzureFunctionFormData,
       webServices: !!savedWebServicesFormData,
+      storageAccount: !!savedStorageAccountFormData,
     });
   }, []);
 
   const appServicesButtons = [
-    { text: 'Azure function', link: '/azureFuntionsPage', active: activeButtons.azureFunction },
-    { text: 'Web service', link: '/webServicesPage', active: activeButtons.webServices },
-    { text: 'Storage Account', link: '#', active: false },
+    { text: 'Azure function', link: '/infraestructura/infraestructuraPages/azureFuntionsPage', active: activeButtons.azureFunction },
+    { text: 'App service', link: '/infraestructura/infraestructuraPages/webServicesPage', active: activeButtons.webServices },
+    { text: 'Storage Account', link: '/infraestructura/infraestructuraPages/storageAccountPage', active: false },
   ];
 
   const databaseButtons = [
@@ -99,7 +102,7 @@ export default function InfraestructuraPage() {
           azureFunction: false,
         }));
         localStorage.removeItem('azureFunctionFormData');
-        window.location.reload(); // Recargar la página
+        window.location.reload(); 
       } catch (error) {
         console.error('Error al enviar correo de Azure Function:', error);
         alert('Error al enviar correo de Azure Function');
@@ -133,16 +136,56 @@ export default function InfraestructuraPage() {
 
       try {
         await emailjs.send('service_ik45uxa', 'template_lsrpqqo', templateParams, 'zRVTRlJja6_NXkpd7');
-        alert('Correo de Web Services enviado con éxito');
+        alert('Correo de App Service enviado con éxito');
         setActiveButtons(prevState => ({
           ...prevState,
           webServices: false,
         }));
         localStorage.removeItem('webServicesFormData');
-        window.location.reload(); // Recargar la página
+        window.location.reload(); 
       } catch (error) {
-        console.error('Error al enviar correo de Web Services:', error);
-        alert('Error al enviar correo de Web Services');
+        console.error('Error al enviar correo de App Service:', error);
+        alert('Error al enviar correo de App Service');
+      }
+    }
+  };
+
+  const handleSendStorageAccount = async () => {
+    const storageAccountFormData = localStorage.getItem('storageAccountFormData');
+    if (storageAccountFormData) {
+      const formData = JSON.parse(storageAccountFormData);
+      const templateParams = {
+        unidadNegocio: formData.unidadNegocio,
+        nombreProyecto: formData.nombreProyecto,
+        tipoRecurso: formData.tipoRecurso,
+        ...(formData.tipoRecurso === 'codigo' && {
+          runtimeStack: formData.runtimeStack,
+          version: formData.version,
+          region: formData.region,
+        }),
+        precioLinux: formData.precioLinux,
+        precioWindows: formData.precioWindows,
+        SistemaOperativo: formData.SistemaOperativo,
+        storage: formData.storage,
+        diagnostico: formData.diagnostico,
+        tipoAccesoPublico: formData.tipoAccesoPublico,
+        inyeccionRed: formData.inyeccionRed,
+        redVirtual: formData.redVirtual,
+        to_email: 'destinatario_correo@gmail.com',
+      };
+
+      try {
+        await emailjs.send('service_ik45uxa', 'template_lsrpqqo', templateParams, 'zRVTRlJja6_NXkpd7');
+        alert('Correo de Storage Account enviado con éxito');
+        setActiveButtons(prevState => ({
+          ...prevState,
+          webServices: false,
+        }));
+        localStorage.removeItem('storageAccountFormData');
+        window.location.reload(); 
+      } catch (error) {
+        console.error('Error al enviar correo de App Service:', error);
+        alert('Error al enviar correo de App Service');
       }
     }
   };
@@ -150,6 +193,7 @@ export default function InfraestructuraPage() {
   const handleSendBoth = () => {
     handleSendAzureFunction();
     handleSendWebServices();
+    handleSendStorageAccount();
   };
 
   return (
@@ -162,7 +206,7 @@ export default function InfraestructuraPage() {
 
       <div className="lg:flex grid justify-center">
         <Card
-          category="App services"
+          category="Web Services"
           description="Categoría para solicitar creación de functions y web apps."
           buttons={appServicesButtons}
         />
