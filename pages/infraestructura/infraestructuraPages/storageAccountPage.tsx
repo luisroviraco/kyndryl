@@ -31,6 +31,9 @@ export default function WebServicesPage() {
     redesVirtuales: '',
     ip: '',
     versionTLS: '',
+    primaryService: '',
+    rendimiento: '',
+    blobStorage: '',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -47,22 +50,16 @@ export default function WebServicesPage() {
       accesoRed: e.target.value,
     }));
   };
-  const handleRadioChangeDg = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadioChangeRendimiento = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevData) => ({
       ...prevData,
-      diagnostico: e.target.value,
+      rendimiento: e.target.value,
     }));
   };
-  const handleRadioChangeAccesoPublico = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRadioChangeBlobStorage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevData) => ({
       ...prevData,
-      tipoAccesoPublico: e.target.value,
-    }));
-  };
-  const handleRadioChangeInyeccionRed = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      inyeccionRed: e.target.value,
+      blobStorage: e.target.value,
     }));
   };
 
@@ -97,7 +94,7 @@ export default function WebServicesPage() {
         <Breadcrumb items={breadcrumbItems} current={'Storage Account'} />
       </div>
       <div className="sub-title w-[350px] ">Crear un Storage Account:</div>
-      <fieldset >
+    <fieldset >
         <div className="lg:flex grid ">
       <div className="w-full  md:w-1/2 lg:w-1/2  ">
         <div className="mb-3">
@@ -121,18 +118,53 @@ export default function WebServicesPage() {
             <span className="absolute right-4 top-1/2 z-10 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-r-2 border-b-2 border-body-color"></span>
           </div>
         </div>
+        </div>
+        <div className="w-full lg:pl-4 md:w-1/2 lg:w-1/2">
+          <div className="mb-[10px]">
+            <label className="card-title mb-[5px] block text-base font-medium text-dark ">
+              Nombre del Proyecto
+            </label>
+            <input
+              id="nombreProyecto"
+              type="text"
+              value={formData.nombreProyecto}
+              onChange={handleInputChange}
+              placeholder="Nombre del proyecto"
+              className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+              required
+            />
+          </div>
+        </div>
       </div>
-      <div className="w-full lg:pl-4 md:w-1/2 lg:w-1/2">
-        <div className="mb-[10px]">
-          <label className="card-title mb-[5px] block text-base font-medium text-dark ">
-            Nombre del Proyecto
+    </fieldset>
+
+    <fieldset >
+      <div className="lg:flex grid ">
+        <div className="w-full  md:w-1/2 lg:w-1/2 mb-3">
+          <label className="card-title mb-[5px] block text-base font-medium">
+            Storage account
           </label>
           <input
-            id="nombreProyecto"
+            id="storage"
             type="text"
-            value={formData.nombreProyecto}
+            value={formData.storage}
             onChange={handleInputChange}
-            placeholder="Nombre del proyecto"
+            placeholder="Nombre Sugerido del Storage Account"
+            className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+            required
+          />
+        </div>
+      <div className="w-full lg:pl-4 md:w-1/2 lg:w-1/2">
+        <div>
+          <label className="card-title mb-[3px] block text-base font-medium text-dark ">
+            Región
+          </label>
+          <input
+            id="region"
+            type="text"
+            value={formData.region}
+            onChange={handleInputChange}
+            placeholder="Escriba la región deseada."
             className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
             required
           />
@@ -141,7 +173,41 @@ export default function WebServicesPage() {
       </div>
       <div className="lg:flex grid ">
       <div className="w-full  md:w-1/2 lg:w-1/2  ">
-        <div className="mb-3">
+        <div className="mt-3">
+          <label className="card-title mb-[5px] block text-base font-medium">
+            Primary Service
+          </label>
+          <div className="relative z-10">
+            <select
+              id="primaryService"
+              value={formData.primaryService}
+              onChange={handleInputChange}
+              className="relative z-10 w-full appearance-none rounded-lg border border-stroke dark:border-dark-3 bg-transparent py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2"
+              required
+            >
+              <option value="" className="dark:bg-dark-2">Seleccione una opción</option>
+              <option value="Azure Blob Storage o Azure Data Lake Storage Gen2" className="dark:bg-dark-2">Azure Blob Storage o Azure Data Lake Storage Gen2</option>
+              <option value="Azure Files" className="dark:bg-dark-2">Azure Files</option>
+              <option value="Otros (tablas y colas)" className="dark:bg-dark-2">Otros (tablas y colas)</option>              
+            </select>
+            <span className="absolute right-4 top-1/2 z-10 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-r-2 border-b-2 border-body-color"></span>
+          </div>
+        </div>
+      </div>
+      <div className="ml-5 mb-5">
+          <label className="card-title mt-5 block text-base ">
+          Rendimiento:
+          </label>
+          <div className="relative z-10 grid">
+            <label><input  id="standar" value="standar" type="radio" name="standar" checked={formData.rendimiento === 'standar'} onChange={handleRadioChangeRendimiento} /> Standar</label>
+            <label><input  id="premium" value="premium" type="radio" name="premium" checked={formData.rendimiento === 'premium'} onChange={handleRadioChangeRendimiento} /> Premium</label>
+          </div>
+        </div>
+      </div>
+
+      <div className="lg:flex grid ">
+      <div className="w-full  md:w-1/2 lg:w-1/2  ">
+        <div className="mb-3 ">
           <label className="card-title mb-[5px] block text-base font-medium">
             Redundancia
           </label>
@@ -164,6 +230,7 @@ export default function WebServicesPage() {
           </div>
         </div>
       </div>
+      {formData.rendimiento === 'premium' && (
       <div className="w-full lg:pl-4 md:w-1/2 lg:w-1/2">
         <div >
           <label className="card-title mb-[5px] block text-base font-medium text-dark ">
@@ -186,84 +253,10 @@ export default function WebServicesPage() {
           </div>
         </div>
       </div>
+      )}
       </div>
-      </fieldset>
-      
-      <fieldset >
-      <div className="w-full md:w-1/1 lg:w-1/1">
-          <label className="card-title mb-[3px] block text-base font-medium">
-            Conectividad de Red
-          </label>
-          <p className="mb-5">Puede conectarse a su cuenta de almacenamiento de forma pública, a través de direcciones IP públicas o puntos finales de servicio, o de forma privada, utilizando un punto final privado.
-          </p>
-
-          <label className="small-card-title mb-[5px] block text-base ">
-          Acceso a la Red:
-          </label>
-          
-          
-          <div className="relative z-10 grid">
-            <label><input id="accesoPublico" value="accesoPublico" type="radio" name="accesoRed" checked={formData.accesoRed === 'accesoPublico'} onChange={handleRadioChangeAccesoRed}/> Habilitar el acceso público desde todas las redes.
-            </label>
-            <label><input  id="accesoPublicoRedesVirtualesIp" value="accesoPublicoRedesVirtualesIp" type="radio" name="accesoPublicoRedesVirtualesIp" checked={formData.accesoRed === 'accesoPublicoRedesVirtualesIp'} onChange={handleRadioChangeAccesoRed} /> Habilite el acceso público desde redes virtuales y direcciones IP seleccionadas</label>
-            <label><input  id="Deshabilitado" value="Deshabilitado" type="radio" name="Deshabilitado" checked={formData.accesoRed === 'Deshabilitado'} onChange={handleRadioChangeAccesoRed} /> Deshabilite el acceso público y use el acceso privado</label>
-          </div>
-      </div>
-    {formData.accesoRed === 'accesoPublicoRedesVirtualesIp' && (
-    <div className="lg:flex grid ">
-      <div className="w-full mt-5 md:w-1/3 lg:w-1/3  ">
-        <div className="mb-3">
-          <label className="small-card-title mb-[5px] block text-base font-medium">
-          Redes Virtuales
-          </label>
-          <div >
-          <input
-            id="redesVirtuales"
-            type="text"
-            value={formData.redesVirtuales}
-            onChange={handleInputChange}
-            placeholder="Redes Virtuales"
-            className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
-            required
-          />
-        </div>
-        </div>
-      </div>
-      <div className="w-full mt-5 md:w-1/3 lg:w-1/3 ml-5 ">
-        <div className="mb-3">
-          <label className="small-card-title mb-[5px] block text-base font-medium">
-          IP
-          </label>
-          <div >
-          <input
-            id="IPs"
-            type="text"
-            value={formData.ip}
-            onChange={handleInputChange}
-            placeholder="Escriba las direcciones IPs separadas por comas"
-            className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
-            required
-          />
-        </div>
-        </div>
-      </div>
-    </div>
-    )}
-      </fieldset>
-      <fieldset>
-      <div className="w-full md:w-1/2 lg:w-1/2">
-          <label className="card-title mb-[10px] block text-base font-medium">
-          Tipo de cifrado
-          </label>
-          
-          <div className="relative z-10 grid">
-            <label><input id="Administradas por Microsoft (MMK)" value="Administradas por Microsoft (MMK)" type="radio" name="tipoDeCifrado" checked={formData.tipoDeCifrado === 'Administradas por Microsoft (MMK)'} onChange={handleRadioChangeTc}/> Claves administradas por Microsoft (MMK)</label>
-            <label><input  id="Administradas por Cliente (CMK)" value="Administradas por Cliente (CMK)" type="radio" name="tipoDeCifrado" checked={formData.tipoDeCifrado === 'Administradas por Cliente (CMK)'} onChange={handleRadioChangeTc} /> Claves administradas por el Cliente (CMK)</label>
-          </div>
-      </div>
-      </fieldset>
-    
-      <fieldset>
+    </fieldset>
+    <fieldset>
       <div className="w-full lg:flex grid  ">
         <div className="mb-3 w-full  md:w-1/2 lg:w-1/2 ">
           <label className="card-title mb-[5px] block text-base font-medium">
@@ -291,7 +284,7 @@ export default function WebServicesPage() {
             <span className="absolute right-4 top-1/2 z-10 mt-[-2px] h-[10px] w-[10px] -translate-y-1/2 rotate-45 border-r-2 border-b-2 border-body-color"></span>
           </div>
         </div>
-        <div className="w-full lg:ml-5 md:w-1/2 lg:w-1/2  ">
+        <div className="w-full lg:ml-5 md:w-1/2 lg:w-1/2 ">
           <label className="small-card-title mb-[10px] block text-base font-medium">
           Espacio de nombres jerárquico
           </label>
@@ -306,51 +299,121 @@ export default function WebServicesPage() {
           </div>
       </div>
       </div>
-      </fieldset>
-      <fieldset>
-      <div className="w-full md:w-1/1 lg:w-1/1">
+    </fieldset>
+    <fieldset>
+      <div className="w-full lg:flex grid ">
+        <div className="w-full md:w-1/2 lg:w-1/2 ">
           <label className="card-title mb-[10px] block text-base font-medium">
-            Networking
+            Protocolos de Acceso
           </label>
-          <p className="mb-3">Las aplicaciones de funciones se pueden aprovisionar con una dirección de entrada pública en Internet o aislada en una red virtual de Azure. Las aplicaciones de funciones también pueden recibir tráfico saliente capaz de llegar a puntos finales en una red virtual, estar gobernadas por grupos de seguridad de red o verse afectadas por rutas de red virtual. De forma predeterminada, su aplicación está abierta a Internet y no puede acceder a una red virtual. Estos aspectos también se pueden cambiar después de aprovisionar la aplicación.
+          <div className="">
+            <div>
+            <input type="checkbox" id="DataLake" name="DataLake" />
+            <label> Habilitar SFTP  </label>
+            </div>
+            <div>
+            <input type="checkbox" id="DataLake" name="DataLake" />
+            <label> Habilitar el sistema de archivos de red v3    </label>
+            </div>
+            
+            </div>
+        </div>
+        <div className="w-full md:w-1/2 lg:w-1/2 ml-5">
+          <label className="card-title mb-[10px] block text-base font-medium">
+            Almacenamiento de blobs
+          </label>
+          <div className="">
+            <div>
+            <input type="checkbox" id="DataLake" name="DataLake" />
+            <label> Permitir la replicación entre inquilinos </label>
+            </div>
+              <label className="small-card-title mt-2 block text-base ">
+                Nivel de acceso:
+              </label>
+              <div className="relative z-10 grid">
+                <label><input  id="hot" value="hot" type="radio" name="hot" checked={formData.blobStorage === 'hot'} onChange={handleRadioChangeBlobStorage} /> Hot</label>
+                <label><input  id="cool" value="cool" type="radio" name="cool" checked={formData.blobStorage === 'cool'} onChange={handleRadioChangeBlobStorage} /> Cool</label>
+              </div>
+            
+            </div>
+        </div>
+      </div>
+
+      </fieldset>
+      
+      <fieldset >
+      <div className="w-full md:w-1/2 lg:w-1/2 pl-3">
+          <label className="card-title mb-[3px] block text-base font-medium">
+            Conectividad de Red
+          </label>
+          <p className="mb-5">Puede conectarse a su cuenta de almacenamiento de forma pública, a través de direcciones IP públicas o puntos finales de servicio, o de forma privada, utilizando un punto final privado.
           </p>
-          <div className="lg:flex">
-          <label className=" mb-[10px] block text-base font-medium">
-          Habilitar el acceso público
+
+          <label className="small-card-title mb-[5px] block text-base ">
+          Acceso a la Red:
           </label>
-          <div className="relative z-10 grid lg:flex">
-            <label className="lg:ml-4"><input id="on" value="On" type="radio" name="tipoAccesoPublico" checked={formData.tipoAccesoPublico === 'On'} onChange={handleRadioChangeAccesoPublico}/> On</label>
-            <label className="lg:ml-4"><input  id="Off" value="Off" type="radio" name="tipoAccesoPublico" checked={formData.tipoAccesoPublico === 'Off'} onChange={handleRadioChangeAccesoPublico} /> Off</label>
-          </div>
-          <label className=" mb-[10px] ml-12 block text-base font-medium">
-          Habilitar inyección de red
-          </label>
-          <div className="relative z-10 grid lg:flex">
-            <label className="lg:ml-4"><input id="On" value="On" type="radio" name="inyeccionRed" checked={formData.inyeccionRed === 'On'} onChange={handleRadioChangeInyeccionRed}/> On</label>
-            <label className="lg:ml-4"><input  id="Off" value="Off" type="radio" name="inyeccionRed" checked={formData.inyeccionRed === 'Off'} onChange={handleRadioChangeInyeccionRed} /> Off</label>
-          </div>
+          
+          
+          <div className="relative z-10 grid">
+            <label><input id="accesoPublico" value="accesoPublico" type="radio" name="accesoRed" checked={formData.accesoRed === 'accesoPublico'} onChange={handleRadioChangeAccesoRed}/> Habilitar el acceso público desde todas las redes.
+            </label>
+            <label><input  id="Acceso Publico Redes Virtuales Ip" value="Acceso Publico Redes Virtuales Ip" type="radio" name="Acceso Publico Redes Virtuales Ip" checked={formData.accesoRed === 'Acceso Publico Redes Virtuales Ip'} onChange={handleRadioChangeAccesoRed} /> Habilite el acceso público desde redes virtuales y direcciones IP seleccionadas</label>
+            <label><input  id="Deshabilitado" value="Deshabilitado" type="radio" name="Deshabilitado" checked={formData.accesoRed === 'Deshabilitado'} onChange={handleRadioChangeAccesoRed} /> Deshabilite el acceso público y use el acceso privado</label>
           </div>
       </div>
-      {formData.inyeccionRed === 'On' && (
-        <div className="w-full md:w-1/1 lg:w-1/1">
-        <label className="card-title mb-[10px] mt-4 block text-base font-medium">
-        Virtual Network
-        </label>
-        <p className="mb-3">Seleccione o cree una red virtual que esté en la misma región que su nueva aplicación.
-        </p>
-        <input
-            id="redVirtual"
+    {formData.accesoRed === 'Acceso Publico Redes Virtuales Ip' && (
+    <div className="lg:flex grid ">
+      <div className="w-full mt-5 md:w-1/3 lg:w-1/3  ">
+        <div className="mb-3">
+          <label className="small-card-title mb-[5px] block text-base font-medium">
+          Redes Virtuales
+          </label>
+          <div >
+          <input
+            id="redesVirtuales"
             type="text"
-            value={formData.redVirtual}
+            value={formData.redesVirtuales}
             onChange={handleInputChange}
-            placeholder="Red virtual"
+            placeholder="Redes Virtuales"
             className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
             required
           />
-        
+        </div>
+        </div>
+      </div>
+      <div className="w-full mt-5 md:w-1/3 lg:w-1/3 ml-5 ">
+        <div className="mb-3">
+          <label className="small-card-title mb-[5px] block text-base font-medium">
+          IP
+          </label>
+          <div >
+          <input
+            id="ip"
+            type="text"
+            value={formData.ip}
+            onChange={handleInputChange}
+            placeholder="Escriba las direcciones IPs separadas por comas"
+            className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+            required
+          />
+        </div>
+        </div>
+      </div>
     </div>
-      )}
+    )}
       </fieldset>
+      <fieldset>
+      <div className="w-full md:w-1/2 lg:w-1/2">
+          <label className="card-title mb-[10px] block text-base font-medium">
+          Tipo de cifrado
+          </label>
+          
+          <div className="relative z-10 grid">
+            <label><input id="Administradas por Microsoft (MMK)" value="Administradas por Microsoft (MMK)" type="radio" name="tipoDeCifrado" checked={formData.tipoDeCifrado === 'Administradas por Microsoft (MMK)'} onChange={handleRadioChangeTc}/> Claves administradas por Microsoft (MMK)</label>
+            <label><input  id="Administradas por Cliente (CMK)" value="Administradas por Cliente (CMK)" type="radio" name="tipoDeCifrado" checked={formData.tipoDeCifrado === 'Administradas por Cliente (CMK)'} onChange={handleRadioChangeTc} /> Claves administradas por el Cliente (CMK)</label>
+          </div>
+      </div>
+      </fieldset>    
       <button onClick={handleSave} className="button m-[30px]">Guardar</button>
       
       <ToastContainer />

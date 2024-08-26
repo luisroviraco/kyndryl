@@ -27,7 +27,7 @@ export default function InfraestructuraPage() {
   const appServicesButtons = [
     { text: 'Azure function', link: '/infraestructura/infraestructuraPages/azureFuntionsPage', active: activeButtons.azureFunction },
     { text: 'App service', link: '/infraestructura/infraestructuraPages/webServicesPage', active: activeButtons.webServices },
-    { text: 'Storage Account', link: '/infraestructura/infraestructuraPages/storageAccountPage', active: false },
+    { text: 'Storage Account', link: '/infraestructura/infraestructuraPages/storageAccountPage', active: activeButtons.storageAccount },
   ];
 
   const databaseButtons = [
@@ -96,7 +96,7 @@ export default function InfraestructuraPage() {
 
       try {
         await emailjs.send('service_ik45uxa', 'template_a3wfnbw', templateParams, 'zRVTRlJja6_NXkpd7');
-        alert('Correo de Azure Function enviado con éxito');
+        alert('Recurso de Azure Function enviado con éxito');
         setActiveButtons(prevState => ({
           ...prevState,
           azureFunction: false,
@@ -104,8 +104,8 @@ export default function InfraestructuraPage() {
         localStorage.removeItem('azureFunctionFormData');
         window.location.reload(); 
       } catch (error) {
-        console.error('Error al enviar correo de Azure Function:', error);
-        alert('Error al enviar correo de Azure Function');
+        console.error('Error al enviar Recurso de Azure Function:', error);
+        alert('Error al enviar Recurso de Azure Function');
       }
     }
   };
@@ -136,7 +136,7 @@ export default function InfraestructuraPage() {
 
       try {
         await emailjs.send('service_ik45uxa', 'template_lsrpqqo', templateParams, 'zRVTRlJja6_NXkpd7');
-        alert('Correo de App Service enviado con éxito');
+        alert('Recurso de App Service enviado con éxito');
         setActiveButtons(prevState => ({
           ...prevState,
           webServices: false,
@@ -144,8 +144,8 @@ export default function InfraestructuraPage() {
         localStorage.removeItem('webServicesFormData');
         window.location.reload(); 
       } catch (error) {
-        console.error('Error al enviar correo de App Service:', error);
-        alert('Error al enviar correo de App Service');
+        console.error('Error al enviar Recurso de App Service:', error);
+        alert('Error al enviar Recurso de App Service');
       }
     }
   };
@@ -157,26 +157,24 @@ export default function InfraestructuraPage() {
       const templateParams = {
         unidadNegocio: formData.unidadNegocio,
         nombreProyecto: formData.nombreProyecto,
-        tipoRecurso: formData.tipoRecurso,
-        ...(formData.tipoRecurso === 'codigo' && {
-          runtimeStack: formData.runtimeStack,
-          version: formData.version,
-          region: formData.region,
-        }),
-        precioLinux: formData.precioLinux,
-        precioWindows: formData.precioWindows,
-        SistemaOperativo: formData.SistemaOperativo,
         storage: formData.storage,
-        diagnostico: formData.diagnostico,
-        tipoAccesoPublico: formData.tipoAccesoPublico,
-        inyeccionRed: formData.inyeccionRed,
-        redVirtual: formData.redVirtual,
+        region: formData.region,
+        primaryService: formData.primaryService,
+        rendimiento: formData.rendimiento,
+        redundancia: formData.redundancia,
+        tipoDeCuenta: formData.tipoDeCuenta,
+        versionTLS: formData.versionTLS,
+        blobStorage: formData.blobStorage,
+        accesoRed: formData.accesoRed,
+        redesVirtuales: formData.redesVirtuales,
+        ip: formData.ip,
+        tipoDeCifrado: formData.tipoDeCifrado,
         to_email: 'destinatario_correo@gmail.com',
       };
 
       try {
         await emailjs.send('service_ik45uxa', 'template_lsrpqqo', templateParams, 'zRVTRlJja6_NXkpd7');
-        alert('Correo de Storage Account enviado con éxito');
+        alert('Recurso de Storage Account enviado con éxito');
         setActiveButtons(prevState => ({
           ...prevState,
           webServices: false,
@@ -184,8 +182,8 @@ export default function InfraestructuraPage() {
         localStorage.removeItem('storageAccountFormData');
         window.location.reload(); 
       } catch (error) {
-        console.error('Error al enviar correo de App Service:', error);
-        alert('Error al enviar correo de App Service');
+        console.error('Error al enviar Recurso de App Service:', error);
+        alert('Error al enviar Recurso de App Service');
       }
     }
   };
