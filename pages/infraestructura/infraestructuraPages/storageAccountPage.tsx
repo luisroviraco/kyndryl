@@ -34,6 +34,10 @@ export default function WebServicesPage() {
     primaryService: '',
     rendimiento: '',
     blobStorage: '',
+    habilitarSFTP: '',
+    habilitarNFSv3: '',
+    permitirInquilinos: '',
+    dataLake: '',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -71,11 +75,19 @@ export default function WebServicesPage() {
     }));
   };
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, checked } = e.target;
+    setFormData((prevData) => ({
+        ...prevData,
+        [id]: checked,
+    }));
+};
+
   const handleSave = () => {
     localStorage.setItem('storageAccountFormData', JSON.stringify(formData));
     toast.success('Datos guardados con exito', {
       position: "top-center",
-      autoClose: 3000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -293,8 +305,8 @@ export default function WebServicesPage() {
           
           <div className="relative z-10 grid">
             <div>
-              <input type="checkbox" id="DataLake" name="DataLake" />
-              <label> Storage DataLake</label>
+              <input type="checkbox" id="dataLake" value={formData.dataLake} onChange={handleCheckboxChange} />
+              <label htmlFor="dataLake"> Storage DataLake</label>
             </div>
           </div>
       </div>
@@ -308,12 +320,12 @@ export default function WebServicesPage() {
           </label>
           <div className="">
             <div>
-            <input type="checkbox" id="DataLake" name="DataLake" />
-            <label> Habilitar SFTP  </label>
+            <input type="checkbox" id="habilitarSFTP" value={formData.habilitarSFTP} onChange={handleCheckboxChange} />
+            <label htmlFor="habilitarSFTP"> Habilitar SFTP</label>
             </div>
             <div>
-            <input type="checkbox" id="DataLake" name="DataLake" />
-            <label> Habilitar el sistema de archivos de red v3    </label>
+            <input type="checkbox" id="habilitarNFSv3" value={formData.habilitarNFSv3} onChange={handleCheckboxChange} />
+            <label htmlFor="habilitarNFSv3"> Habilitar el sistema de archivos de red v3    </label>
             </div>
             
             </div>
@@ -324,8 +336,8 @@ export default function WebServicesPage() {
           </label>
           <div className="">
             <div>
-            <input type="checkbox" id="DataLake" name="DataLake" />
-            <label> Permitir la replicación entre inquilinos </label>
+            <input type="checkbox" id="permitirInquilinos" value={formData.permitirInquilinos} onChange={handleCheckboxChange} />
+            <label htmlFor="permitirInquilinos"> Permitir la replicación entre inquilinos </label>
             </div>
               <label className="small-card-title mt-2 block text-base ">
                 Nivel de acceso:
@@ -355,7 +367,7 @@ export default function WebServicesPage() {
           
           
           <div className="relative z-10 grid">
-            <label><input id="accesoPublico" value="accesoPublico" type="radio" name="accesoRed" checked={formData.accesoRed === 'accesoPublico'} onChange={handleRadioChangeAccesoRed}/> Habilitar el acceso público desde todas las redes.
+            <label><input id="Acceso Publico" value="Acceso Publico" type="radio" name="accesoRed" checked={formData.accesoRed === 'Acceso Publico'} onChange={handleRadioChangeAccesoRed}/> Habilitar el acceso público desde todas las redes.
             </label>
             <label><input  id="Acceso Publico Redes Virtuales Ip" value="Acceso Publico Redes Virtuales Ip" type="radio" name="Acceso Publico Redes Virtuales Ip" checked={formData.accesoRed === 'Acceso Publico Redes Virtuales Ip'} onChange={handleRadioChangeAccesoRed} /> Habilite el acceso público desde redes virtuales y direcciones IP seleccionadas</label>
             <label><input  id="Deshabilitado" value="Deshabilitado" type="radio" name="Deshabilitado" checked={formData.accesoRed === 'Deshabilitado'} onChange={handleRadioChangeAccesoRed} /> Deshabilite el acceso público y use el acceso privado</label>

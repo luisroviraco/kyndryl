@@ -76,7 +76,7 @@ export default function AzureFunctionsPage() {
     localStorage.setItem('azureFunctionFormData', JSON.stringify(formData));
     toast.success('Datos guardados con exito', {
       position: "top-center",
-      autoClose: 3000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

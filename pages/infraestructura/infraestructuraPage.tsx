@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Card from "../../components/Card";
 import Breadcrumb from '../../components/ui/Breadcrumb';
 import emailjs from 'emailjs-com';
+import Swal from 'sweetalert2'
 
 export default function InfraestructuraPage() {
   const [activeButtons, setActiveButtons] = useState({
@@ -93,23 +94,21 @@ export default function InfraestructuraPage() {
         redVirtual: formData.redVirtual,
         to_email: 'destinatario_correo@gmail.com',
       };
-
+  
       try {
         await emailjs.send('service_ik45uxa', 'template_a3wfnbw', templateParams, 'zRVTRlJja6_NXkpd7');
-        alert('Recurso de Azure Function enviado con éxito');
         setActiveButtons(prevState => ({
           ...prevState,
           azureFunction: false,
         }));
         localStorage.removeItem('azureFunctionFormData');
-        window.location.reload(); 
       } catch (error) {
         console.error('Error al enviar Recurso de Azure Function:', error);
-        alert('Error al enviar Recurso de Azure Function');
+        throw error;
       }
     }
   };
-
+  
   const handleSendWebServices = async () => {
     const webServicesFormData = localStorage.getItem('webServicesFormData');
     if (webServicesFormData) {
@@ -133,23 +132,21 @@ export default function InfraestructuraPage() {
         redVirtual: formData.redVirtual,
         to_email: 'destinatario_correo@gmail.com',
       };
-
+  
       try {
         await emailjs.send('service_ik45uxa', 'template_lsrpqqo', templateParams, 'zRVTRlJja6_NXkpd7');
-        alert('Recurso de App Service enviado con éxito');
         setActiveButtons(prevState => ({
           ...prevState,
           webServices: false,
         }));
         localStorage.removeItem('webServicesFormData');
-        window.location.reload(); 
       } catch (error) {
         console.error('Error al enviar Recurso de App Service:', error);
-        alert('Error al enviar Recurso de App Service');
+        throw error;
       }
     }
   };
-
+  
   const handleSendStorageAccount = async () => {
     const storageAccountFormData = localStorage.getItem('storageAccountFormData');
     if (storageAccountFormData) {
@@ -168,31 +165,58 @@ export default function InfraestructuraPage() {
         accesoRed: formData.accesoRed,
         redesVirtuales: formData.redesVirtuales,
         ip: formData.ip,
+        habilitarSFTP: formData.habilitarSFTP,
+        habilitarNFSv3: formData.habilitarNFSv3,
+        permitirInquilinos: formData.permitirInquilinos,
+        dataLake: formData.dataLake,
         tipoDeCifrado: formData.tipoDeCifrado,
         to_email: 'destinatario_correo@gmail.com',
       };
-
+  
       try {
         await emailjs.send('service_ik45uxa', 'template_lsrpqqo', templateParams, 'zRVTRlJja6_NXkpd7');
-        alert('Recurso de Storage Account enviado con éxito');
         setActiveButtons(prevState => ({
           ...prevState,
           webServices: false,
         }));
         localStorage.removeItem('storageAccountFormData');
-        window.location.reload(); 
       } catch (error) {
-        console.error('Error al enviar Recurso de App Service:', error);
-        alert('Error al enviar Recurso de App Service');
+        console.error('Error al enviar Recurso de Storage Account:', error);
+        throw error;
       }
     }
   };
-
-  const handleSendBoth = () => {
-    handleSendAzureFunction();
-    handleSendWebServices();
-    handleSendStorageAccount();
+  
+  const handleSendBoth = async () => {
+    try {
+      await Promise.all([
+        handleSendAzureFunction(),
+        handleSendWebServices(),
+        handleSendStorageAccount(),
+      ]);
+  
+      Swal.fire({
+        title: "¡Buen trabajo!",
+        text: "Los recursos han sido enviados con éxito.",
+        icon: "success",
+        customClass: {
+        confirmButton: 'custom-button'
+        }     
+      }).then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      });
+  
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un problema al enviar uno o más recursos.",
+        icon: "error"
+      });
+    }
   };
+  
 
   return (
     <main className="content">

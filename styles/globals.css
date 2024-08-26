@@ -195,10 +195,17 @@ fieldset {
 .card-button.active {
     background-color: #184B75; /* O el color que prefieras */
     color: white;
-  }
+}
 
 .card {
     background-color: white;
     margin: 13px;
 
 }
+
+.swal2-confirm.custom-button {
+    background-color: #184B75; 
+    color: white; 
+    border-radius: 5px; 
+    padding: 10px 30px; 
+  }
