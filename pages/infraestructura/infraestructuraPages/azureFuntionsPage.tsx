@@ -293,7 +293,7 @@ export default function AzureFunctionsPage() {
           </label>
           <p className="mb-2">Al crear una aplicación de funciones, debe crear o vincular a una cuenta de Azure Storage de uso general que admita Blobs, Queue y Table Storage.         </p>
           <label className="small-card-title mb-[5px] block text-base font-medium">
-            Storage account
+            Storage Account
           </label>
           <input
             id="storage"
@@ -351,7 +351,7 @@ export default function AzureFunctionsPage() {
       {formData.inyeccionRed === 'On' && (
         <div className="w-full md:w-1/1 lg:w-1/1">
         <label className="card-title mb-[10px] mt-4 block text-base font-medium">
-        Virtual Network
+        Red Virtual
         </label>
         <p className="mb-3">Seleccione o cree una red virtual que esté en la misma región que su nueva aplicación.
         </p>

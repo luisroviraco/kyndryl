@@ -154,7 +154,7 @@ export default function WebServicesPage() {
       <div className="lg:flex grid ">
         <div className="w-full  md:w-1/2 lg:w-1/2 mb-3">
           <label className="card-title mb-[5px] block text-base font-medium">
-            Storage account
+            Storage Account
           </label>
           <input
             id="storage"
