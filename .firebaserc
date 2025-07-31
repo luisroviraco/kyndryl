@@ -1,5 +1,9 @@
 {
   "projects": {
+    "kyndryl-dian-project": "kyndryl-dian-project",
     "default": "kyndryl-dian-project"
-  }
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }

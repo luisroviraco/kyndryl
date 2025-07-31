@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Solicitud de Recursos Azure",
-  description: "Web App diseñada para solicitar recursos Azure a Kyndryl con mas facilidad y rapidez por parte de sus clientes.",
+  description: "Web App diseñada para solicitar recursos Azure con mas facilidad y rapidez por parte de sus clientes.",
 };
 
 export default function RootLayout({
